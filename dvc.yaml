@@ -3,24 +3,29 @@ stages:
     cmd: uv run src/data/separation.py
     deps:
     - src/data/separation.py
-    - data/raw_data
+    - data/raw_data/raw.csv
     outs:
-    - data/processed_data/separated
+    - data/processed_data/separated/X_test.csv
+    - data/processed_data/separated/X_train.csv
+    - data/processed_data/separated/y_train.csv
+    - data/processed_data/separated/y_test.csv
 
   normalisation_donnees:
     cmd: uv run src/data/normalisation.py
     deps:
     - src/data/normalisation.py
-    - data/processed_data/separated
+    - data/processed_data/separated/X_test.csv
+    - data/processed_data/separated/X_train.csv
     outs:
-    - data/processed_data/normalized
+    - data/processed_data/normalized/X_test_scaled.csv
+    - data/processed_data/normalized/X_train_scaled.csv
 
   recherches_meilleurs_params:
     cmd: uv run src/models/gridsearch.py
     deps:
     - src/models/gridsearch.py
-    - data/processed_data/normalized
-    - data/processed_data/separated
+    - data/processed_data/normalized/X_train_scaled.csv
+    - data/processed_data/separated/y_train.csv
     outs:
     - models/params/meilleurs_params.pkl
 
@@ -28,8 +33,8 @@ stages:
     cmd: uv run src/models/train.py
     deps:
     - src/models/train.py
-    - data/processed_data/normalized
-    - data/processed_data/separated
+    - data/processed_data/normalized/X_train_scaled.csv
+    - data/processed_data/separated/y_train.csv
     - models/params/meilleurs_params.pkl
     outs:
     - models/entraine/modele_entraine.pkl
@@ -38,8 +43,8 @@ stages:
     cmd: uv run src/models/evaluate.py
     deps:
     - src/models/evaluate.py
-    - data/processed_data/normalized
-    - data/processed_data/separated
+    - data/processed_data/normalized/X_test_scaled.csv
+    - data/processed_data/separated/y_test.csv
     - models/entraine/modele_entraine.pkl
     metrics:
     - metrics/scores.json:

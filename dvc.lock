@@ -3,52 +3,66 @@ stages:
   separation_donnees:
     cmd: uv run src/data/separation.py
     deps:
-    - path: data/raw_data
+    - path: data/raw_data/raw.csv
       hash: md5
-      md5: 83524b9ab09f4ac15af2c899d45e60eb.dir
-      size: 333773
-      nfiles: 2
+      md5: 617b56af2992376d5c3e91ad80823898
+      size: 333757
     - path: src/data/separation.py
       hash: md5
       md5: 1fcbd723469706013349203bdf6117c2
       size: 1083
     outs:
-    - path: data/processed_data/separated
+    - path: data/processed_data/separated/X_test.csv
       hash: md5
-      md5: f0e344589f7c032b39b69b52cb425e7a.dir
-      size: 330849
-      nfiles: 4
+      md5: 97b9756141a526ea8a3b28f7f3263a8a
+      size: 59930
+    - path: data/processed_data/separated/X_train.csv
+      hash: md5
+      md5: fda73536e3da2427aec383671777c8b3
+      size: 238512
+    - path: data/processed_data/separated/y_test.csv
+      hash: md5
+      md5: 697a4b18543ef622d461b3b8b5cf66c9
+      size: 6526
+    - path: data/processed_data/separated/y_train.csv
+      hash: md5
+      md5: 6e5b909aa2c715d28d981f2e4a3bbeef
+      size: 25881
   normalisation_donnees:
     cmd: uv run src/data/normalisation.py
     deps:
-    - path: data/processed_data/separated
+    - path: data/processed_data/separated/X_test.csv
       hash: md5
-      md5: f0e344589f7c032b39b69b52cb425e7a.dir
-      size: 330849
-      nfiles: 4
+      md5: 97b9756141a526ea8a3b28f7f3263a8a
+      size: 59930
+    - path: data/processed_data/separated/X_train.csv
+      hash: md5
+      md5: fda73536e3da2427aec383671777c8b3
+      size: 238512
     - path: src/data/normalisation.py
       hash: md5
       md5: 651e8d4fc07216d3971eb1ef9a4ac8d3
       size: 1018
     outs:
-    - path: data/processed_data/normalized
+    - path: data/processed_data/normalized/X_test_scaled.csv
       hash: md5
-      md5: 19e2072617c98142157387a9465ace92.dir
-      size: 277933
-      nfiles: 2
+      md5: a64cec4bd3c14e1cb2558094bdefd514
+      size: 55568
+    - path: data/processed_data/normalized/X_train_scaled.csv
+      hash: md5
+      md5: a237b826cef034ee3e2b792b1f42ad81
+      size: 222365
   recherches_meilleurs_params:
     cmd: uv run src/models/gridsearch.py
     deps:
-    - path: data/processed_data/normalized
+    - path: data/processed_data/normalized/X_train_scaled.csv
       hash: md5
-      md5: 19e2072617c98142157387a9465ace92.dir
-      size: 277933
-      nfiles: 2
-    - path: data/processed_data/separated
+      md5: a237b826cef034ee3e2b792b1f42ad81
+      size: 222365
+    - path: data/processed_data/separated/y_train.csv
       hash: md5
-      md5: f0e344589f7c032b39b69b52cb425e7a.dir
-      size: 330849
-      nfiles: 4
+      md5: 6e5b909aa2c715d28d981f2e4a3bbeef
+      size: 25881
     - path: src/models/gridsearch.py
       hash: md5
       md5: 94013d44fe4c2271c761a725e1fc70f8
@@ -61,16 +75,14 @@ stages:
   entrainement:
     cmd: uv run src/models/train.py
     deps:
-    - path: data/processed_data/normalized
+    - path: data/processed_data/normalized/X_train_scaled.csv
       hash: md5
-      md5: 19e2072617c98142157387a9465ace92.dir
-      size: 277933
-      nfiles: 2
-    - path: data/processed_data/separated
+      md5: a237b826cef034ee3e2b792b1f42ad81
+      size: 222365
+    - path: data/processed_data/separated/y_train.csv
       hash: md5
-      md5: f0e344589f7c032b39b69b52cb425e7a.dir
-      size: 330849
-      nfiles: 4
+      md5: 6e5b909aa2c715d28d981f2e4a3bbeef
+      size: 25881
     - path: models/params/meilleurs_params.pkl
       hash: md5
       md5: a8bb573e246c49e41020788251752c62
@@ -87,16 +99,14 @@ stages:
   evaluation:
     cmd: uv run src/models/evaluate.py
     deps:
-    - path: data/processed_data/normalized
+    - path: data/processed_data/normalized/X_test_scaled.csv
       hash: md5
-      md5: 19e2072617c98142157387a9465ace92.dir
-      size: 277933
-      nfiles: 2
-    - path: data/processed_data/separated
+      md5: a64cec4bd3c14e1cb2558094bdefd514
+      size: 55568
+    - path: data/processed_data/separated/y_test.csv
       hash: md5
-      md5: f0e344589f7c032b39b69b52cb425e7a.dir
-      size: 330849
-      nfiles: 4
+      md5: 697a4b18543ef622d461b3b8b5cf66c9
+      size: 6526
     - path: models/entraine/modele_entraine.pkl
       hash: md5
       md5: 2fd6871ca1300069bd0bbaa48cd90e21
