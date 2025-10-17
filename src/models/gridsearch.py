@@ -6,10 +6,10 @@ from pathlib import Path
 import pickle
 
 
-data_dir = Path("data/processed_data/X_train_scaled.csv")
+data_dir = Path("data/processed_data/normalized/X_train_scaled.csv")
 X = pd.read_csv(data_dir)
 
-data_dir = Path("data/processed_data/y_train.csv")
+data_dir = Path("data/processed_data/separated/y_train.csv")
 y = pd.read_csv(data_dir)
 
 parameters = {'n_estimators':[10,50,100,200,500],

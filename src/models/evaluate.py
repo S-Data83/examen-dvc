@@ -17,10 +17,10 @@ with open(model_path,"rb") as f:
     rfr = pickle.load(f)
 
 
-data_dir = Path("data/processed_data/X_test_scaled.csv")
+data_dir = Path("data/processed_data/normalized/X_test_scaled.csv")
 X = pd.read_csv(data_dir)
 
-data_dir = Path("data/processed_data/y_test.csv")
+data_dir = Path("data/processed_data/separated/y_test.csv")
 y = pd.read_csv(data_dir)
 
 
@@ -31,7 +31,7 @@ MSE = mean_squared_error(np.ravel(y),y_pred)
 R2 = r2_score(np.ravel(y),y_pred)
 RMSE = root_mean_squared_error(np.ravel(y),y_pred)
 
-data_processed_dir = Path("data/processed_data/y_pred.csv")
+data_processed_dir = Path("data/processed_data/predicted/y_pred.csv")
 data_processed_dir.parent.mkdir(parents=True, exist_ok=True)
 np.savetxt(data_processed_dir, y_pred, delimiter=',')
 

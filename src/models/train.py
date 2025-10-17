@@ -10,10 +10,10 @@ model_path = Path("models/meilleurs_params.pkl")
 with open(model_path,"rb") as f:
     rfr = pickle.load(f)
 
-data_dir = Path("data/processed_data/X_train_scaled.csv")
+data_dir = Path("data/processed_data/normalized/X_train_scaled.csv")
 X = pd.read_csv(data_dir)
 
-data_dir = Path("data/processed_data/y_train.csv")
+data_dir = Path("data/processed_data/separated/y_train.csv")
 y = pd.read_csv(data_dir)
 
 

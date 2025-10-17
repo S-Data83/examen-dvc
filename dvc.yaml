@@ -1,0 +1,10 @@
+stages:
+  separation_donnees:
+    cmd: uv run src/data/separation.py
+    deps:
+    - src/data/separation.py
+    - data/raw_data
+    outs:
+    - data/processed_data/separated
+    
+

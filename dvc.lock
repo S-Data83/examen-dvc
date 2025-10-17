@@ -1,0 +1,20 @@
+schema: '2.0'
+stages:
+  separation_donnees:
+    cmd: uv run src/data/separation.py
+    deps:
+    - path: data/raw_data
+      hash: md5
+      md5: 83524b9ab09f4ac15af2c899d45e60eb.dir
+      size: 333773
+      nfiles: 2
+    - path: src/data/separation.py
+      hash: md5
+      md5: 1fcbd723469706013349203bdf6117c2
+      size: 1083
+    outs:
+    - path: data/processed_data/separated
+      hash: md5
+      md5: f0e344589f7c032b39b69b52cb425e7a.dir
+      size: 330849
+      nfiles: 4
