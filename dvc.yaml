@@ -6,5 +6,43 @@ stages:
     - data/raw_data
     outs:
     - data/processed_data/separated
-    
+
+  normalisation_donnees:
+    cmd: uv run src/data/normalisation.py
+    deps:
+    - src/data/normalisation.py
+    - data/processed_data/separated
+    outs:
+    - data/processed_data/normalized
+
+  recherches_meilleurs_params:
+    cmd: uv run src/models/gridsearch.py
+    deps:
+    - src/models/gridsearch.py
+    - data/processed_data/normalized
+    - data/processed_data/separated
+    outs:
+    - models/params/meilleurs_params.pkl
+
+  entrainement:
+    cmd: uv run src/models/train.py
+    deps:
+    - src/models/train.py
+    - data/processed_data/normalized
+    - data/processed_data/separated
+    - models/params/meilleurs_params.pkl
+    outs:
+    - models/entraine/modele_entraine.pkl
+
+  evaluation:
+    cmd: uv run src/models/evaluate.py
+    deps:
+    - src/models/evaluate.py
+    - data/processed_data/normalized
+    - data/processed_data/separated
+    - models/entraine/modele_entraine.pkl
+    metrics:
+    - metrics/scores.json:
+        cache: false
+
 
