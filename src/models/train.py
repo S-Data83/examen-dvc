@@ -5,7 +5,7 @@ from sklearn.model_selection import GridSearchCV
 from pathlib import Path
 import pickle
 
-model_path = Path("models/meilleurs_params.pkl")
+model_path = Path("models/params/meilleurs_params.pkl")
 
 with open(model_path,"rb") as f:
     rfr = pickle.load(f)
@@ -19,7 +19,7 @@ y = pd.read_csv(data_dir)
 
 rfr.fit(X,np.ravel(y))
 
-model_path = Path("models/modele_entraine.pkl")
+model_path = Path("models/entraine/modele_entraine.pkl")
 
 with open(model_path,"wb") as f:
     pickle.dump(rfr,f)

@@ -24,7 +24,7 @@ clf.fit(X,np.ravel(y))
 
 best_estimator = clf.best_estimator_
 
-model_path = Path("models/meilleurs_params.pkl")
+model_path = Path("models/params/meilleurs_params.pkl")
 model_path.parent.mkdir(parents=True, exist_ok=True)
 with open(model_path,"wb") as f:
     pickle.dump(best_estimator,f)

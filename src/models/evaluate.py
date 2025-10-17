@@ -11,7 +11,7 @@ import pickle
 import json
 
 
-model_path = Path("models/modele_entraine.pkl")
+model_path = Path("models/entraine/modele_entraine.pkl")
 
 with open(model_path,"rb") as f:
     rfr = pickle.load(f)
