@@ -46,6 +46,8 @@ stages:
     - data/processed_data/normalized/X_test_scaled.csv
     - data/processed_data/separated/y_test.csv
     - models/entraine/modele_entraine.pkl
+    outs:
+    - data/processed_data/predicted/y_pred.csv
     metrics:
     - metrics/scores.json:
         cache: false

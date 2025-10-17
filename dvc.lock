@@ -116,6 +116,10 @@ stages:
       md5: f65cb6c06047e9ad945457ce1e68d23b
       size: 1209
     outs:
+    - path: data/processed_data/predicted/y_pred.csv
+      hash: md5
+      md5: e0959abdd2fc048eae04e78973845d27
+      size: 9100
     - path: metrics/scores.json
       hash: md5
       md5: 9f6eede2efc4944d0e8c270783b11035
